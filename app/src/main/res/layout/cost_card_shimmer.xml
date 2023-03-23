@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/transact_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    app:cardElevation="0dp"
+
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/cost_icon"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:background="@color/grey_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/cost_name"
+            android:layout_width="50dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="16dp"
+            android:background="@color/grey_1"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/cost_icon"
+            app:layout_constraintTop_toTopOf="@id/cost_icon" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/cost_type"
+            android:layout_width="50dp"
+            android:layout_height="20dp"
+            android:background="@color/grey_1"
+            android:textColor="@color/grey_1"
+            app:layout_constraintStart_toStartOf="@id/cost_name"
+            app:layout_constraintTop_toBottomOf="@id/cost_name" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/price"
+            android:layout_width="50dp"
+            android:layout_height="20dp"
+            android:background="@color/grey_1"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/price_type"
+            android:layout_width="50dp"
+            android:layout_height="20dp"
+            android:background="@color/grey_1"
+            android:textColor="@color/grey_1"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/price" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="10dp"
+    app:strokeColor="@color/blue"
+    app:strokeWidth="2dp"
+    app:cardUseCompatPadding="true">
+
+    <FrameLayout
+        android:layout_width="80dp"
+        android:layout_height="80dp">
+
+        <ImageView
+            android:id="@+id/image_ad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/beauty_ic_cashback"
+            android:translationZ="0dp"
+            android:padding="5dp"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_ad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="8sp"
+            android:text="Загляните в истории"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:translationZ="1dp"
+            android:layout_gravity="bottom|left"
+            android:layout_margin="8dp"/>
+    </FrameLayout>
+
+</com.google.android.material.card.MaterialCardView>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/main">
+
+    <navigation
+        android:id="@+id/main"
+        app:startDestination="@id/mainScreen">
+        <fragment
+            android:id="@+id/mainScreen"
+            android:name="com.jamascrorp.tinkoff.presentation.main_screen.MainScreenFragment"
+            android:label="fragment_main_screen"
+            tools:layout="@layout/fragment_main_screen">
+            <action
+                android:id="@+id/action_mainScreen_to_operationScreen"
+                app:destination="@id/operationScreen" />
+        </fragment>
+        <fragment
+            android:id="@+id/operationScreenDetails"
+            android:name="com.jamascrorp.tinkoff.presentation.operation_screen_details.OperationScreenDetailsFragment"
+            android:label="Операции"
+            tools:layout="@layout/fragment_operation_screen_details">
+            <argument
+                android:name="model"
+                app:argType="com.jamascrorp.tinkoff.domain.entity.OperationsModel" />
+        </fragment>
+        <fragment
+            android:id="@+id/operationScreen"
+            android:name="com.jamascrorp.tinkoff.presentation.operation_screen.OperationScreenFragment"
+            android:label="Операции"
+            tools:layout="@layout/fragment_operation_screen">
+            <action
+                android:id="@+id/action_operationScreen_to_operationScreenDetails"
+                app:destination="@id/operationScreenDetails" />
+        </fragment>
+        <action
+            android:id="@+id/action_global_feautures"
+            app:destination="@id/feautures" />
+    </navigation>
+    <navigation
+        android:id="@+id/pays"
+        app:startDestination="@id/payScreen">
+        <fragment
+            android:id="@+id/payScreen"
+            android:name="com.jamascrorp.tinkoff.presentation.pay_screen.PayScreenFragment"
+            android:label="fragment_pay_screen"
+            tools:layout="@layout/fragment_pay_screen">
+            <action
+                android:id="@+id/action_payScreen_to_payScreenDetails"
+                app:destination="@id/payScreenDetails" />
+            <action
+                android:id="@+id/action_payScreen_to_payItemFragment"
+                app:destination="@id/payItemFragment" />
+            <action
+                android:id="@+id/action_payScreen_to_finalPayFragment"
+                app:destination="@id/finalPayFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/payScreenDetails"
+            android:name="com.jamascrorp.tinkoff.presentation.pay_screen_details.PayScreenDetails"
+            android:label="Оплатить"
+            tools:layout="@layout/fragment_pay_screen_details">
+            <argument
+                android:name="model"
+                app:argType="com.jamascrorp.tinkoff.domain.entity.PayModel[]" />
+            <action
+                android:id="@+id/action_payScreenDetails_to_payItemFragment"
+                app:destination="@id/payItemFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/payItemFragment"
+            android:name="com.jamascrorp.tinkoff.presentation.pay_item_screen.PayItemFragment"
+            android:label="Оплатить"
+            tools:layout="@layout/fragment_pay_item">
+            <argument
+                android:name="model"
+                app:argType="com.jamascrorp.tinkoff.domain.entity.PayModel" />
+            <action
+                android:id="@+id/action_payItemFragment_to_finalPayFragment"
+                app:destination="@id/finalPayFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/finalPayFragment"
+            android:name="com.jamascrorp.tinkoff.presentation.final_pay_screen.FinalPayFragment"
+            android:label="Оплатить"
+            tools:layout="@layout/fragment_final_pay">
+            <argument
+                android:name="model"
+                app:argType="com.jamascrorp.tinkoff.domain.entity.PayItemModel" />
+            <argument
+                android:name="name"
+                app:argType="string" />
+            <action
+                android:id="@+id/action_finalPayFragment_to_animationFragment"
+                app:destination="@id/animationFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/animationFragment"
+            android:name="com.jamascrorp.tinkoff.presentation.AnimationFragment"
+            android:label="Оплатить">
+            <action
+                android:id="@+id/action_animationFragment_to_mainScreen"
+                app:destination="@id/main" />
+        </fragment>
+    </navigation>
+    <fragment
+        android:id="@+id/feautures"
+        android:name="com.jamascrorp.tinkoff.presentation.Feautures"
+        android:label="fragment_feautures"
+        tools:layout="@layout/fragment_feautures" />
+</navigation>

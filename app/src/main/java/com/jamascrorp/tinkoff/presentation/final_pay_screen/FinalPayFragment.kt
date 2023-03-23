@@ -54,7 +54,8 @@ class FinalPayFragment : Fragment() {
         Log.d("TAG", "onViewCreated: $args")
         with(binding) {
             payName.text = name
-            pays.setOnClickListener {
+            pays.setOnClickListener { button ->
+                button.isEnabled = false
                 val myDate: Date = Calendar.getInstance().time
                 val time = myDate.toString().dropLast(15)
                 viewModel.postPay(
@@ -75,6 +76,7 @@ class FinalPayFragment : Fragment() {
                         is Network.Exception -> {}
                         is Network.Loading -> {}
                         is Network.Success -> {
+                            button.isEnabled = true
                             findNavController().navigate(R.id.action_finalPayFragment_to_animationFragment)
                         }
                     }

@@ -14,6 +14,7 @@ import com.jamascrorp.tinkoff.data.database.models.bookmarks.BookmarksModelDB
 import com.jamascrorp.tinkoff.data.network.Network
 import com.jamascrorp.tinkoff.data.network.models.operations.OperationsModelItem
 import com.jamascrorp.tinkoff.databinding.FragmentFinalPayBinding
+import com.jamascrorp.tinkoff.hideKeyboard
 import com.jamascrorp.tinkoff.showAction
 import java.util.*
 import javax.inject.Inject
@@ -72,10 +73,23 @@ class FinalPayFragment : Fragment() {
                 )
                 viewModel.liveData.observe(viewLifecycleOwner) {
                     when (it) {
-                        is Network.Error -> {}
-                        is Network.Exception -> {}
-                        is Network.Loading -> {}
+                        is Network.Error -> {
+                            Toast.makeText(requireContext(), "Проверьте подключение к сети", Toast.LENGTH_SHORT).show()
+                            binding.pb.visibility = View.GONE
+                            button.hideKeyboard()
+                            button.isEnabled = true
+                        }
+                        is Network.Exception -> {
+                            Toast.makeText(requireContext(), "Проверьте подключение к сети", Toast.LENGTH_SHORT).show()
+                            binding.pb.visibility = View.GONE
+                            button.hideKeyboard()
+                            button.isEnabled = true
+                        }
+                        is Network.Loading -> {
+                            binding.pb.visibility = View.VISIBLE
+                        }
                         is Network.Success -> {
+                            binding.pb.visibility = View.GONE
                             button.isEnabled = true
                             findNavController().navigate(R.id.action_finalPayFragment_to_animationFragment)
                         }

@@ -65,8 +65,10 @@ class OperationScreenFragment : Fragment() {
             val cost = it.map { it.price }
             val sum = cost.map { it.toInt() }.sum()
             binding.costs.text = sum.toString()
-            adapter = array?.let { it1 -> OperationsRvAdapter(it1) }
+            adapter = array?.reversed()?.let { it1 -> OperationsRvAdapter(it1) }
             binding.costsRv.adapter = adapter
+            binding.costsRv.setHasFixedSize(true)
+            binding.costsRv.setItemViewCacheSize(20)
             binding.costsRv.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter?.clickOnTransactionsItem = {
@@ -88,11 +90,14 @@ class OperationScreenFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             connectivityObserver.observe().collect(FlowCollector {
                 if (it.name == "Available") {
+                    binding.networkError.visibility = View.GONE
                     viewModel.updateOperations()
                     binding.root.setOnRefreshListener {
                         viewModel.updateOperations()
                         binding.root.isRefreshing = false
                     }
+                } else {
+                    binding.networkError.visibility = View.VISIBLE
                 }
             })
         }

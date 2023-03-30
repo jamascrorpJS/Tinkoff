@@ -14,6 +14,8 @@ class MainScreenFragmentViewModel @Inject constructor(
     private val getOperationsUseCase: GetOperationsUseCase,
 ) : ViewModel() {
 
+
+
     private var _operationsLiveData = MutableLiveData<List<OperationsModel>>()
     val operationsLiveData = _operationsLiveData
 
@@ -22,35 +24,4 @@ class MainScreenFragmentViewModel @Inject constructor(
             _operationsLiveData.value = getOperationsUseCase.invoke()
         }
     }
-
-    val model = listOf(
-        AdvertisingModel(
-            R.drawable.beauty_ic_cashback,
-            "Загляните в истории"
-        ),
-        AdvertisingModel(
-            R.drawable.beauty_ic_cashback,
-            "Загляните в истории"
-        ),
-        AdvertisingModel(
-            R.drawable.beauty_ic_cashback,
-            "Загляните в истории"
-        ),
-        AdvertisingModel(
-            R.drawable.beauty_ic_cashback,
-            "Загляните в истории"
-        ),
-        AdvertisingModel(
-            R.drawable.beauty_ic_cashback,
-            "Загляните в истории"
-        ),
-        AdvertisingModel(
-            R.drawable.beauty_ic_cashback,
-            "Загляните в истории"
-        ),
-        AdvertisingModel(
-            R.drawable.beauty_ic_cashback,
-            "Загляните в истории"
-        ),
-    )
 }

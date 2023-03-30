@@ -38,6 +38,9 @@
         <action
             android:id="@+id/action_global_feautures"
             app:destination="@id/feautures" />
+        <action
+            android:id="@+id/action_global_storiesScreenFragment"
+            app:destination="@id/storiesScreenFragment" />
     </navigation>
     <navigation
         android:id="@+id/pays"
@@ -110,4 +113,16 @@
         android:name="com.jamascrorp.tinkoff.presentation.Feautures"
         android:label="fragment_feautures"
         tools:layout="@layout/fragment_feautures" />
+    <fragment
+        android:id="@+id/storiesScreenFragment"
+        android:name="com.jamascrorp.tinkoff.presentation.stories_screen.StoriesScreenFragment"
+        android:label="fragment_stories_screen"
+        tools:layout="@layout/fragment_stories_screen" >
+        <action
+            android:id="@+id/action_storiesScreenFragment_to_main"
+            app:destination="@id/main" />
+        <argument
+            android:name="model"
+            app:argType="com.jamascrorp.tinkoff.domain.entity.StoriesModel" />
+    </fragment>
 </navigation>

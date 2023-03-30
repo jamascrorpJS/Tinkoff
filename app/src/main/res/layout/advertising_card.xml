@@ -6,7 +6,8 @@
     app:cardCornerRadius="10dp"
     app:strokeColor="@color/blue"
     app:strokeWidth="2dp"
-    app:cardUseCompatPadding="true">
+    app:cardUseCompatPadding="true"
+    android:id="@+id/card_icon">
 
     <FrameLayout
         android:layout_width="80dp"
@@ -14,10 +15,11 @@
 
         <ImageView
             android:id="@+id/image_ad"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:src="@drawable/beauty_ic_cashback"
             android:translationZ="0dp"
+            android:adjustViewBounds="true"
             android:padding="5dp"/>
 
         <com.google.android.material.textview.MaterialTextView
@@ -26,10 +28,10 @@
             android:layout_height="wrap_content"
             android:textSize="8sp"
             android:text="Загляните в истории"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textStyle="bold"
             android:translationZ="1dp"
-            android:layout_gravity="bottom|left"
+            android:layout_gravity="bottom|center"
             android:layout_margin="8dp"/>
     </FrameLayout>
 

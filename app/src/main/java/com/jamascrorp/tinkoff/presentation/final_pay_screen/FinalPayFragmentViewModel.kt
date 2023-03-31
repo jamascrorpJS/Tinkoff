@@ -20,6 +20,9 @@ class FinalPayFragmentViewModel @Inject constructor(
     val liveData: LiveData<Network<ResponseBody>>
         get() = getPaymentUseCase.invoke()
 
+    val liveData1: LiveData<String>
+        get() = getPaymentUseCase.getExcept()
+
     fun postPay(operationsModelItem: OperationsModelItem) {
         viewModelScope.launch {
             getPaymentUseCase.initResponse(operationsModelItem)

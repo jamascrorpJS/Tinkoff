@@ -7,6 +7,7 @@ import okhttp3.ResponseBody
 
 interface PaymentRepository {
 
+    fun getExcept(): LiveData<String>
     fun getPayments(): LiveData<Network<ResponseBody>>
 
     suspend fun postPays(operationsModelItem: OperationsModelItem)

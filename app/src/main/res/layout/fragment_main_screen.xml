@@ -133,7 +133,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="28dp">
+            android:paddingVertical="28dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="10dp">
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv"
@@ -172,7 +174,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="15dp">
+            android:paddingVertical="15dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp">
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"

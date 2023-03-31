@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,7 +32,6 @@ class MainScreenFragment : Fragment() {
     private lateinit var connectivityObserver: ConnectivityObserver
     private lateinit var db: FirebaseFirestore
     private var storiesList: List<StoriesModel>? = null
-
     @Inject
     lateinit var viewModel: MainScreenFragmentViewModel
 
@@ -53,17 +53,16 @@ class MainScreenFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         hideAction()
         getFromFire()
+
         binding.root.setOnClickListener {
             it.hideKeyboard()
             it.clearFocus()
         }
         viewModel.getOperations()
-        viewModel.operationsLiveData.observe(viewLifecycleOwner){
-            var count = 0
-            it.map {
-                count = it.price.toInt()
-            }
-            Log.d("TAG", "onViewCreated: $count")
+        viewModel.operationsLiveData.observeOnce(viewLifecycleOwner){
+            val cost = it.map { it.price }
+            val sum = cost.map { it.toInt() }.sum()
+            binding.buy.text = "Ваши траты: $sum"
         }
 
         binding.allTransacts.setOnClickListener {
@@ -84,7 +83,6 @@ class MainScreenFragment : Fragment() {
         super.onStart()
         hideAction()
         networkCheck()
-
         showBottom(this)
     }
 
@@ -92,6 +90,7 @@ class MainScreenFragment : Fragment() {
         super.onStop()
         showAction()
     }
+
     fun networkCheck() {
         connectivityObserver = NetworkConnectivityObserver(requireContext())
         CoroutineScope(Dispatchers.IO).launch {
@@ -111,10 +110,9 @@ class MainScreenFragment : Fragment() {
 
     private fun getFromFire() {
         CoroutineScope(Dispatchers.IO).launch {
-//            binding.progressBar.visibility = View.VISIBLE
             db = FirebaseFirestore.getInstance()
             db.collection("advertising").get().addOnFailureListener {
-                Log.d("TAG", "getFromFire: $it")
+                Toast.makeText(requireContext(), "Не удалось загрузить сториз", Toast.LENGTH_SHORT).show()
             }.addOnSuccessListener { doc ->
                 if (doc != null) {
                     binding.shimmer.stopShimmer()

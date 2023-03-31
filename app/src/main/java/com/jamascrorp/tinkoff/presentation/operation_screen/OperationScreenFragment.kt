@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,12 +13,14 @@ import com.jamascrorp.tinkoff.data.network.ConnectivityObserver
 import com.jamascrorp.tinkoff.data.network.NetworkConnectivityObserver
 import com.jamascrorp.tinkoff.databinding.FragmentOperationScreenBinding
 import com.jamascrorp.tinkoff.domain.entity.OperationsModel
+import com.jamascrorp.tinkoff.observeOnce
 import com.jamascrorp.tinkoff.presentation.adapters.OperationsRvAdapter
 import com.jamascrorp.tinkoff.showAction
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Inject
 
@@ -28,7 +31,6 @@ class OperationScreenFragment : Fragment() {
     private val binding get() = viewBinding!!
     private var adapter: OperationsRvAdapter? = null
     private lateinit var connectivityObserver: ConnectivityObserver
-
     @Inject
     lateinit var viewModel: OperationScreenViewModel
     private var array: List<OperationsModel>? = null
@@ -50,13 +52,15 @@ class OperationScreenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         showAction()
-        val myDate: Date = Calendar.getInstance().time
+
         binding.monthCost.text = viewModel.getMonth()
-        viewModel.liveData1.observe(viewLifecycleOwner) {
-            Log.d("TAG", "onViewCreated: $it")
+
+        viewModel.liveData1.observeOnce(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
+
         viewModel.getOperations()
-        viewModel.ld.observe(viewLifecycleOwner) {
+        viewModel.ld.observeOnce(viewLifecycleOwner) {
             if (it?.isEmpty() != true) {
                 binding.shimmer.stopShimmer()
                 binding.shimmer.visibility = View.GONE
@@ -89,15 +93,17 @@ class OperationScreenFragment : Fragment() {
         connectivityObserver = NetworkConnectivityObserver(requireContext())
         CoroutineScope(Dispatchers.IO).launch {
             connectivityObserver.observe().collect(FlowCollector {
-                if (it.name == "Available") {
-                    binding.networkError.visibility = View.GONE
-                    viewModel.updateOperations()
-                    binding.root.setOnRefreshListener {
+                withContext(Dispatchers.Main) {
+                    if (it.name == "Available") {
+                        binding.networkError.visibility = View.GONE
                         viewModel.updateOperations()
-                        binding.root.isRefreshing = false
+                        binding.root.setOnRefreshListener {
+                            viewModel.updateOperations()
+                            binding.root.isRefreshing = false
+                        }
+                    } else {
+                        binding.networkError.visibility = View.VISIBLE
                     }
-                } else {
-                    binding.networkError.visibility = View.VISIBLE
                 }
             })
         }

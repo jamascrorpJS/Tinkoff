@@ -19,7 +19,6 @@ class PayItemFragment : Fragment() {
     private var viewBinding: FragmentPayItemBinding? = null
     private val binding get() = viewBinding!!
     private var adapter: PayItemRvAdapter? = null
-    lateinit var viewModel: PayItemFragmentViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,8 +31,8 @@ class PayItemFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this)[PayItemFragmentViewModel::class.java]
         showAction()
+
         val args = PayItemFragmentArgs.fromBundle(requireArguments()).model
         val subs = args.subs
         val list = subs.map {
@@ -55,5 +54,4 @@ class PayItemFragment : Fragment() {
         binding.payItemRv.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
     }
-
 }

@@ -20,7 +20,6 @@ class PayScreenDetails : Fragment() {
     private var viewBinding: FragmentPayScreenDetailsBinding? = null
     private val binding get() = viewBinding!!
     private var adapter: PayVerticalRvAdapter? = null
-    lateinit var viewModel: PayScreenDetailsFragmentViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,7 +33,6 @@ class PayScreenDetails : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         showAction()
-        viewModel = ViewModelProvider(this)[PayScreenDetailsFragmentViewModel::class.java]
 
         val payModelList = PayScreenDetailsArgs.fromBundle(requireArguments()).model.map {
             PayModel(
@@ -44,11 +42,6 @@ class PayScreenDetails : Fragment() {
                 it.subs
             )
         }
-        Log.d("TAG", "onViewCreated: ${
-            payModelList.filter { it.id == "1" }.map {
-                it.subs
-            }
-        }")
 
         adapter = PayVerticalRvAdapter(payModelList)
         adapter?.clickOnPayItem = {

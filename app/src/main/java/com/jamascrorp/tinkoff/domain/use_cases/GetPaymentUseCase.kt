@@ -10,6 +10,9 @@ import javax.inject.Inject
 class GetPaymentUseCase @Inject constructor(private val repository: PaymentRepository) {
 
 
+    fun getExcept(): LiveData<String> {
+        return repository.getExcept()
+    }
     suspend fun initResponse(operationsModelItem: OperationsModelItem) {
         repository.postPays(operationsModelItem)
     }

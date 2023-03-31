@@ -14,7 +14,6 @@ class OperationScreenDetailsFragment : Fragment() {
 
     private var viewBinding: FragmentOperationScreenDetailsBinding? = null
     private val binding get() = viewBinding!!
-    lateinit var viewModel: OperationsScreenDetailsFragmentViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,7 +27,6 @@ class OperationScreenDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         showAction()
-        viewModel = ViewModelProvider(this)[OperationsScreenDetailsFragmentViewModel::class.java]
         val args = OperationScreenDetailsFragmentArgs.fromBundle(requireArguments()).model
         with(binding){
             costName.text = args.costName

@@ -5,6 +5,9 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 fun Fragment.showAction() {
@@ -31,4 +34,13 @@ fun Fragment.showBottom(fragment: Fragment) {
     (activity as AppCompatActivity).apply {
         activity?.findViewById<BottomNavigationView>(R.id.bottom)?.visibility = View.VISIBLE
     }
+}
+
+fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observer<T>) {
+    observe(lifecycleOwner, object : Observer<T> {
+        override fun onChanged(t: T?) {
+            observer.onChanged(t)
+            removeObserver(this)
+        }
+    })
 }

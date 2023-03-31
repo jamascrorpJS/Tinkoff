@@ -26,7 +26,6 @@ class StoriesScreenFragment : Fragment() {
     private var viewBinding: FragmentStoriesScreenBinding? = null
     private val binding get() = viewBinding!!
     private var timer: CountDownTimer? = null
-    private lateinit var db: FirebaseFirestore
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -37,11 +36,11 @@ class StoriesScreenFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        hideAction()
         val args = StoriesScreenFragmentArgs.fromBundle(requireArguments()).model
         Glide.with(this)
             .load(args.image)
             .into(binding.stories)
-        hideAction()
         timer = object : CountDownTimer(4500, 1000) {
             override fun onTick(p0: Long) {
                 binding.progressBar.max = 1000

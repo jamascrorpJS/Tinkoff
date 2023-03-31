@@ -19,8 +19,15 @@ class PaymentRepositoryImpl @Inject constructor(
     private val postPayLiveData: LiveData<Network<ResponseBody>>
         get() = liveDataPays
 
+    private val livedata = MutableLiveData<String>()
+    val liveData = livedata
+
     override fun getPayments(): LiveData<Network<ResponseBody>> {
         return postPayLiveData
+    }
+
+    override fun getExcept(): LiveData<String> {
+        return liveData
     }
 
     override suspend fun postPays(operationsModelItem: OperationsModelItem) {
@@ -30,6 +37,7 @@ class PaymentRepositoryImpl @Inject constructor(
             handleResponse(response, liveDataPays)
         } catch (e: Exception) {
             liveDataPays.postValue(Network.Exception(e.fillInStackTrace()))
+            livedata.postValue("Нет доступа к серверу")
         }
     }
 

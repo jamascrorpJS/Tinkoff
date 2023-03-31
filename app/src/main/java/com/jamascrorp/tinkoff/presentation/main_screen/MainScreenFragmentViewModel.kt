@@ -14,8 +14,6 @@ class MainScreenFragmentViewModel @Inject constructor(
     private val getOperationsUseCase: GetOperationsUseCase,
 ) : ViewModel() {
 
-
-
     private var _operationsLiveData = MutableLiveData<List<OperationsModel>>()
     val operationsLiveData = _operationsLiveData
 

@@ -9,6 +9,9 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.jamascrorp.tinkoff.data.network.Network
+import kotlinx.coroutines.delay
+import okhttp3.ResponseBody
 
 fun Fragment.showAction() {
     (activity as AppCompatActivity).supportActionBar?.show()
@@ -40,7 +43,19 @@ fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observ
     observe(lifecycleOwner, object : Observer<T> {
         override fun onChanged(t: T?) {
             observer.onChanged(t)
+
             removeObserver(this)
+        }
+    })
+}
+
+fun <T> LiveData<T>.observeNetworkOnce(lifecycleOwner: LifecycleOwner, observer: Observer<T>) {
+    observe(lifecycleOwner, object : Observer<T> {
+        override fun onChanged(t: T?) {
+            observer.onChanged(t)
+            if (t is Network.Success<*>) {
+                removeObserver(this)
+            }
         }
     })
 }

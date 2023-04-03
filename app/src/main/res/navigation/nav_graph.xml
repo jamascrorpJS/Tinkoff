@@ -106,6 +106,9 @@
             <action
                 android:id="@+id/action_animationFragment_to_mainScreen"
                 app:destination="@id/main" />
+            <action
+                android:id="@+id/action_animationFragment_to_finalPayFragment"
+                app:destination="@id/finalPayFragment" />
         </fragment>
     </navigation>
     <fragment

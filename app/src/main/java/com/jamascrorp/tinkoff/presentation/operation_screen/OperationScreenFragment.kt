@@ -60,7 +60,7 @@ class OperationScreenFragment : Fragment() {
         }
 
         viewModel.getOperations()
-        viewModel.ld.observeOnce(viewLifecycleOwner) {
+        viewModel.ld.observe(viewLifecycleOwner) {
             if (it?.isEmpty() != true) {
                 binding.shimmer.stopShimmer()
                 binding.shimmer.visibility = View.GONE
